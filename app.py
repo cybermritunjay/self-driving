@@ -48,7 +48,7 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 #left Functoins
-@app.route('/left-turnn')
+@app.route('/left-turn')
 def leftTurn():
     global carControls
     carControls.left()
