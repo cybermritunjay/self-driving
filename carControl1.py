@@ -39,14 +39,17 @@ class CarControls:
         GPIO.output(self.Backward, GPIO.HIGH)
         print("Moving Back")
         time.sleep(2)
-        GPIO.output(self.Backward, GPIO.LOW)
+        #GPIO.output(self.Backward, GPIO.LOW)
 
     def forward(self):
         GPIO.output(self.Forward, GPIO.HIGH)
         print("Moving Forward")
         time.sleep(2)
-        GPIO.output(self.Forward, GPIO.LOW)
-
+        #GPIO.output(self.Forward, GPIO.LOW)
+    def breaks(self):
+        GPIO.output(self.Forward,GPIO.LOW)
+        GPIO.output(self.Backward,GPIO.LOW)
+        print("stop")
     def clean(self):
         self.p.stop()
         GPIO.cleanup()
