@@ -49,6 +49,7 @@ class CarControls:
     def breaks(self):
         GPIO.output(self.Forward,GPIO.LOW)
         GPIO.output(self.Backward,GPIO.LOW)
+        time.sleep(2)
         print("stop")
     def clean(self):
         self.p.stop()

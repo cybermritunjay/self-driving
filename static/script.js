@@ -37,7 +37,7 @@ function cameraVisionHandler() {
     })
 }
 function turnOffCar() {
-    fetch(window.location.href + 'clean').then((data) => {
+    fetch(window.location.href + 'exit').then((data) => {
         console.log(data);
     })
 }
