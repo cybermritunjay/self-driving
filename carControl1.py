@@ -1,18 +1,25 @@
 import RPi.GPIO as GPIO
 import time
+
+
 class CarControls:
     def __init__(self):
-        self.p=None
+        self.p = None
         self.servoPIN = 12
         self.currentAngle = 90
+        self.Forward = 26
+        self.Backward = 20
+        self.sleeptime = 1
         print("initialization Complete")
         self.setup()
+
     def setup(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.servoPIN, GPIO.OUT)
+        GPIO.setup(self.Forward, GPIO.OUT)
+        GPIO.setup(self.Backward, GPIO.OUT)
+        self.p = GPIO.PWM(self.servoPIN, 50)  # GPIO 17 for PWM with 50Hz
 
-        self.p = GPIO.PWM(self.servoPIN, 50) # GPIO 17 for PWM with 50Hz
-        
         self.p.start(7)
         print("setup Complete")
 
@@ -27,10 +34,19 @@ class CarControls:
         print(self.currentAngle)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
         time.sleep(1)
+
     def reverse(self):
-        pass
+        GPIO.output(self.Backward, GPIO.HIGH)
+        print("Moving Back")
+        time.sleep(2)
+        GPIO.output(self.Backward, GPIO.LOW)
+
     def forward(self):
-        pass
+        GPIO.output(self.Forward, GPIO.HIGH)
+        print("Moving Forward")
+        time.sleep(2)
+        GPIO.output(self.Forward, GPIO.LOW)
+
     def clean(self):
         self.p.stop()
         GPIO.cleanup()
