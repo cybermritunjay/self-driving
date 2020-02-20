@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+    <!-- Navbar-->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg py-3">
+            <div class="container">
+                <a href="#" class="navbar-brand"><img src="{{ url_for('static', filename='img/Raspi-PGB001.webp') }}" width="30" height="30" alt=""></a>
+                <h2 class="navbar-brand-name">Advance Car Controls</h2>
+                <div onclick="turnOffCar()" id="turnOffCar">
+                    <img src="{{ url_for('static', filename='img/ai.png') }}" width="100%" height="100%">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 video-feed-container">
+                <div class="shadow-lg p-3 mb-5 rounded video-feed">
+<!----------
+                    <img src="{{ url_for('video_feed') }}" />
+------------->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+
+                <div class="joystick">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 640 640" id="joystick-svg">
+                        <defs>
+                        </defs>
+                        <path onclick="left()" id="a1f13S6e2e"
+                            d="m2.32,634.31l-2.32,-634.31l199.57,198.53l-13.49,14.54l-20.77,30.11l-15.57,52.94l0,56.06l19.73,51.91l30.1,36.34l-197.25,193.88z" />
+                        <path onclick="upper()" id="ahdHmZzU"
+                            d="m5.69,1.38l634.31,-1.38l-198.83,199.28l-14.52,-13.52l-30.07,-20.81l-52.92,-15.65l-56.07,-0.08l-51.93,19.64l-36.38,30.06l-193.59,-197.54z" />
+                        <path onclick="right()" id="a3qWSeg6iP"
+                            d="m634.6,636.54l2.32,-634.3l-199.58,198.53l13.5,14.54l20.76,30.1l15.58,52.95l0,56.06l-19.73,51.91l-30.11,36.33l197.26,193.88z" />
+                        <path onclick="lower()" id="c3YafqSHJu"
+                            d="m2.85,639.19l634.3,1.37l-198.83,-199.27l-14.51,13.52l-30.08,20.8l-52.92,15.65l-56.06,0.09l-51.94,-19.65l-36.38,-30.05l-193.58,197.54z" />
+                        <ellipse onclick="breaks()" xmlns="http://www.w3.org/2000/svg" opacity="0.16" stroke="#000"
+                            ry="58.064539" rx="60.483899" id="svg_26" cy="319.117943" cx="321.612933"
+                            fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#fff" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="section-tag section-low-font">Auto Piolet</p>
+                <div class="card-div function-active" onclick="autoPioletHandler()" id="auto-piolet">
+                    <img src="{{ url_for('static', filename='img/steering-wheel.png') }}" width="100%" height="100%">
+                </div>
+            </div>
+            <div class="col">
+                <p class="section-tag section-low-font">Sign Detection</p>
+                <div class="card-div function-active" onclick="signHandler()" id="sign-detection">
+                    <img src="{{ url_for('static', filename='img/car.png') }}" width="100%" height="100%">
+                </div>
+            </div>
+            <div class="col">
+                <p class="section-tag section-low-font">Camera</p>
+                <div class="card-div function-active" onclick="cameraVisionHandler()" id="camera-vision">
+                    <img src="{{ url_for('static', filename='img/eye-scan.png') }}" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function lower() {
+            fetch(window.location.href+'backward').then((data) =>{
+                console.log(data);
+                
+            })
+            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_down.jpg") }} ')`;
+            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
+        }
+        function upper() {
+            fetch(window.location.href+'forward').then((data) =>{
+                console.log(data);
+                
+            })
+            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_top.jpg") }} ')`;
+            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
+        }
+        function left() {
+            fetch(window.location.href+'left-turn').then((data) =>{
+                console.log(data);
+                
+            })
+            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_left.jpg") }} ')`;
+            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
+        }
+        function right() {
+            fetch(window.location.href+'right-turn').then((data) =>{
+                console.log(data);
+                
+            })
+            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_right.jpg") }} ')`;
+            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
+
+        }
+        function breaks() {
+            fetch(window.location.href+'break').then((data) =>{
+                console.log(data);
+                
+            })
+        }
+        function cameraVisionHandler() {
+            document.getElementById("camera-vision").classList.toggle("function-inactive")
+            document.getElementById("camera-vision").classList.toggle("function-active")
+            fetch(window.location.href+'toggleCamera').then((data) =>{
+                console.log(data);
+                
+            })
+        }
+        function turnOffCar(){
+            fetch(window.location.href+'clean').then((data) =>{
+            console.log(data);
+        }
+        function autoPioletHandler() {
+            document.getElementById("auto-piolet").classList.toggle("function-inactive")
+            document.getElementById("auto-piolet").classList.toggle("function-active")
+        }
+        function signHandler() {
+            document.getElementById("sign-detection").classList.toggle("function-inactive")
+            document.getElementById("sign-detection").classList.toggle("function-active")
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

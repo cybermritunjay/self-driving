@@ -1,0 +1,78 @@
+.video-feed-container{
+    height: 37vh;
+    margin: 2%;
+    
+    background: transparent;
+    
+}
+.video-feed{
+    border: 1px solid #fff;
+    box-shadow: 0 1rem 3rem rgba(255,255,255,.175)!important;
+    background-image: linear-gradient(135deg, #232627 0%, #1a1c1c 100%) !important;
+}
+.section-tag{
+    color: #fff;
+}
+.navbar .navbar-brand {
+    color: #fff;
+}
+.navbar-brand-name{
+    display: inline-block;
+    color: #fff;
+    font-size: 1.5em;
+}
+.section-low-font {
+    font-size: 0.7em;
+}
+.image-map > area{
+    cursor: pointer;
+}
+#imagemap-main-image{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+#joystick-svg{
+    background-image: url("./img/joystick/Analog_Joystick.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    width: 100%;
+    height:100%;
+}
+#joystick-svg > path, ellipse{
+    fill: transparent;
+    cursor: pointer;
+}
+#auto-piolet{
+
+        border-radius: 19px;
+        padding: 5px;
+}
+#sign-detection{
+    border-radius: 19px;
+    padding: 5px;
+}
+
+#camera-vision{
+    border-radius: 19px;
+    padding: 5px;
+}
+.function-active{
+    background-color: #28a745;
+}
+.function-inactive{
+    background-color: #dc3545;
+}
+body {
+    min-height: 110vh;
+    background-color: #28323b;
+}
+
+
+
+/* temperary classes */
+.video-feed > img{
+    height: 100%;
+    width: 100%;
+}
