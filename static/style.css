@@ -1,7 +1,6 @@
 .video-feed-container{
     height: 37vh;
     margin: 2%;
-    
     background: transparent;
     
 }
@@ -19,7 +18,7 @@
 .navbar-brand-name{
     display: inline-block;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 1em;
 }
 .section-low-font {
     font-size: 0.7em;

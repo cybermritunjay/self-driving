@@ -14,7 +14,7 @@
                 <a href="#" class="navbar-brand"><img src="{{ url_for('static', filename='img/Raspi-PGB001.webp') }}" width="30" height="30" alt=""></a>
                 <h2 class="navbar-brand-name">Advance Car Controls</h2>
                 <div onclick="turnOffCar()" id="turnOffCar">
-                    <img src="{{ url_for('static', filename='img/ai.png') }}" width="100%" height="100%">
+                    <img class="navbar-brand" src="{{ url_for('static', filename='img/ai.png') }}" width="30" height="30">
                 </div>
             </div>
         </nav>
@@ -74,67 +74,7 @@
             </div>
         </div>
     </div>
-    <script>
-        function lower() {
-            fetch(window.location.href+'backward').then((data) =>{
-                console.log(data);
-                
-            })
-            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_down.jpg") }} ')`;
-            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
-        }
-        function upper() {
-            fetch(window.location.href+'forward').then((data) =>{
-                console.log(data);
-                
-            })
-            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_top.jpg") }} ')`;
-            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
-        }
-        function left() {
-            fetch(window.location.href+'left-turn').then((data) =>{
-                console.log(data);
-                
-            })
-            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_left.jpg") }} ')`;
-            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
-        }
-        function right() {
-            fetch(window.location.href+'right-turn').then((data) =>{
-                console.log(data);
-                
-            })
-            document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_right.jpg") }} ')`;
-            setTimeout(() => { document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` }, 100);
-
-        }
-        function breaks() {
-            fetch(window.location.href+'break').then((data) =>{
-                console.log(data);
-                
-            })
-        }
-        function cameraVisionHandler() {
-            document.getElementById("camera-vision").classList.toggle("function-inactive")
-            document.getElementById("camera-vision").classList.toggle("function-active")
-            fetch(window.location.href+'toggleCamera').then((data) =>{
-                console.log(data);
-                
-            })
-        }
-        function turnOffCar(){
-            fetch(window.location.href+'clean').then((data) =>{
-            console.log(data);
-        }
-        function autoPioletHandler() {
-            document.getElementById("auto-piolet").classList.toggle("function-inactive")
-            document.getElementById("auto-piolet").classList.toggle("function-active")
-        }
-        function signHandler() {
-            document.getElementById("sign-detection").classList.toggle("function-inactive")
-            document.getElementById("sign-detection").classList.toggle("function-active")
-        }
-    </script>
+    
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -144,6 +84,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 
 </html>
