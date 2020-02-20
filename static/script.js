@@ -1,32 +1,49 @@
+function showCover(){
+    document.getElementById('page-cover').style.display = 'block'
+}
+function hideCover(){
+    document.getElementById('page-cover').style.display ='none'
+}
 function lower() {
+    showCover()
     document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_down.jpg") }} ')`;
     fetch(window.location.href + 'backward').then((data) => {
         console.log(data)
         document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` 
+    hideCover()
     })
 }
 function upper() {
+    showCover()
     document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_top.jpg") }} ')`;
     fetch(window.location.href + 'forward').then((data) => {
         console.log(data);
         document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` 
+    hideCover()
     })
 }
-function left() {   
+function left() { 
+    showCover()  
     document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_left.jpg") }} ')`;
     fetch(window.location.href + 'left-turn').then((data) => {
-        document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')`     })
+        document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')`     
+    hideCover()
+    })
 }
 function right() {
+    showCover()
     document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_right.jpg") }} ')`;
     fetch(window.location.href + 'right-turn').then((data) => {
         console.log(data);
         document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` 
+    hideCover()
     })
 }
 function breaks() {
+    showCover()
     fetch(window.location.href + 'break').then((data) => {
         console.log(data);
+    hideCover()
     })
 }
 function cameraVisionHandler() {
@@ -34,6 +51,7 @@ function cameraVisionHandler() {
     document.getElementById("camera-vision").classList.toggle("function-active")
     fetch(window.location.href + 'toggleCamera').then((data) => {
         console.log(data);
+        
     })
 }
 function turnOffCar() {
