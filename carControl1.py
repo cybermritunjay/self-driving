@@ -8,7 +8,7 @@ class CarControls:
         self.servoPIN = 12
         self.currentAngle = 90
         self.Forward = 26
-        self.Backward = 20
+        self.Backward =20
         self.sleeptime = 1
         print("initialization Complete")
         self.setup()
@@ -19,8 +19,10 @@ class CarControls:
         GPIO.setup(self.Forward, GPIO.OUT)
         GPIO.setup(self.Backward, GPIO.OUT)
         self.p = GPIO.PWM(self.servoPIN, 50)  # GPIO 17 for PWM with 50Hz
-
+        GPIO.output(self.Backward, GPIO.LOW)
+        GPIO.output(self.Forward, GPIO.LOW)
         self.p.start(7)
+        self.p.ChangeDutyCycle(0)
         print("setup Complete")
 
     def left(self):
@@ -42,12 +44,14 @@ class CarControls:
         self.p.ChangeDutyCycle(0)
 
     def reverse(self):
+        GPIO.output(self.Forward, GPIO.LOW)
         GPIO.output(self.Backward, GPIO.HIGH)
         print("Moving Back")
         time.sleep(2)
         #GPIO.output(self.Backward, GPIO.LOW)
 
     def forward(self):
+        GPIO.output(self.Backward, GPIO.LOW)
         GPIO.output(self.Forward, GPIO.HIGH)
         print("Moving Forward")
         time.sleep(2)
