@@ -41,7 +41,7 @@ function right() {
 }
 function breaks() {
     showCover()
-    fetch(window.location.href + 'breaks').then((data) => {
+    fetch(window.location.href + 'stop').then((data) => {
         console.log(data);
     hideCover()
     })

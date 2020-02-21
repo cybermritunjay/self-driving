@@ -74,9 +74,9 @@ def backward():
     return ("go backwards")
 #break Functoins
 @app.route('/breaks')
-def breaks():
+def stop():
     global carControls
-    carControls.breaks()
+    carControls.stop()
     return ("breaks applied")
 
 @app.route('/exit')

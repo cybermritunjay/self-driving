@@ -26,8 +26,8 @@ class CarControls:
         print("setup Complete")
 
     def left(self):
-        self.currentAngle = self.currentAngle-10 if self.currentAngle > 70 else 70
-        print(self.currentAngle)
+        self.currentAngle = self.currentAngle-15 if self.currentAngle > 70 else 70
+        print("currentAngle=",self.currentAngle)
         GPIO.output(self.servoPIN,True)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
         time.sleep(1)
@@ -35,8 +35,8 @@ class CarControls:
         self.p.ChangeDutyCycle(0)
 
     def right(self):
-        self.currentAngle = self.currentAngle+10 if self.currentAngle < 110 else 110
-        print(self.currentAngle)
+        self.currentAngle = self.currentAngle+15 if self.currentAngle < 110 else 110
+        print("currentAngle=",self.currentAngle)
         GPIO.output(self.servoPIN,True)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
         time.sleep(1)
@@ -56,10 +56,9 @@ class CarControls:
         print("Moving Forward")
         time.sleep(2)
         #GPIO.output(self.Forward, GPIO.LOW)
-    def breaks(self):
+    def stop(self):
         GPIO.output(self.Forward,GPIO.LOW)
         GPIO.output(self.Backward,GPIO.LOW)
-        time.sleep(2)
         print("stop")
     def clean(self):
         self.p.stop()
