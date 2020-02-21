@@ -23,7 +23,7 @@ class CarControls:
         GPIO.output(self.Forward, GPIO.LOW)
         self.p.start(7)
         self.p.ChangeDutyCycle(7)
-        sleep(2)
+        time.sleep(2)
         self.p.ChangeDutyCycle(0)
         print("setup Complete")
 
