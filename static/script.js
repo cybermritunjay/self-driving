@@ -55,6 +55,7 @@ function cameraVisionHandler() {
     })
 }
 function turnOffCar() {
+    showCover()
     fetch(window.location.href + 'exit').then((data) => {
         console.log(data);
     })

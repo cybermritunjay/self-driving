@@ -26,14 +26,20 @@ class CarControls:
     def left(self):
         self.currentAngle = self.currentAngle-10 if self.currentAngle > 70 else 70
         print(self.currentAngle)
+        GPIO.output(self.servoPIN,True)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
         time.sleep(1)
+        GPIO.output(self.servoPIN,False)
+        self.p.ChangeDutyCycle(0)
 
     def right(self):
         self.currentAngle = self.currentAngle+10 if self.currentAngle < 110 else 110
         print(self.currentAngle)
+        GPIO.output(self.servoPIN,True)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
         time.sleep(1)
+        GPIO.output(self.servoPIN,False)
+        self.p.ChangeDutyCycle(0)
 
     def reverse(self):
         GPIO.output(self.Backward, GPIO.HIGH)
