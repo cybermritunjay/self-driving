@@ -73,7 +73,7 @@ def backward():
     carControls.reverse()
     return ("go backwards")
 #break Functoins
-@app.route('/breaks')
+@app.route('/stop')
 def stop():
     global carControls
     carControls.stop()
