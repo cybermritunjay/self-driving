@@ -100,6 +100,9 @@ class CarControls:
         GPIO.output(self.Forward,GPIO.LOW)
         GPIO.output(self.Backward,GPIO.LOW)
         print("stop")
+
+    def stablizeTurn(self,angle):
+        pass
     def clean(self):
         self.p.stop()
         GPIO.cleanup()

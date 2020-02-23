@@ -10,8 +10,10 @@ from carControl1 import CarControls
 
 #Global Actions
 showCamera = True
+autoPiolet = True
 carControls = CarControls()
 app = Flask(__name__)
+stearingAngle = 0
 app.config['SECRET_KEY'] = 'Mritunjay'
 socketio = SocketIO(app)
 
@@ -26,6 +28,16 @@ def toggleCamera():
     return ("Camera is", showCamera)
 
 
+@app.route('/toggleautoPiolet')
+def toggleautoPiolet():
+    global autoPiolet
+    if autoPiolet:
+        autoPiolet = False
+    else:
+        autoPiolet = True
+    return ("Camera is", autoPiolet)
+
+
 @app.route('/')
 def index():
     """Video streaming home page."""
@@ -34,10 +46,12 @@ def index():
 
 def gen(cameraOff, camera):
     """Video streaming generator function."""
+    global stearingAngle
     while True:
         frame = cameraOff.get_frame()
-        dummy = camera.get_frame()
+        dummy, stearingAngle = camera.get_frame()
         if showCamera:
+
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + dummy + b'\r\n')
         else:
@@ -83,6 +97,7 @@ def stop():
     carControls.stop()
     return ("breaks applied")
 
+
 @app.route('/exit')
 def exit():
     global carControls
@@ -96,12 +111,17 @@ def connect_handler():
     time.sleep(1)
     socketio.emit('ultrasonic', {"val": "connection Started"})
 
+
 @socketio.on('ultrasonic')
 def ultrasonic_handler():
     global carControls
     time.sleep(1)
-    socketio.emit('ultrasonic', {"front": carControls.distanceFront(),'back':carControls.distanceBack()})
+    #socketio.emit('ultrasonic', {"front": "112",'back':"112"})
+    if autoPiolet:
+        carControls.stablizeTurn(stearingAngle)
+    socketio.emit('ultrasonic', {
+                  "front": carControls.distanceFront(), 'back': carControls.distanceBack()})
 
 
 if __name__ == '__main__':
-    socketio.run(app,host='0.0.0.0', debug=True)
+    socketio.run(app, host='0.0.0.0', debug=True)
