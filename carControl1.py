@@ -102,7 +102,15 @@ class CarControls:
         print("stop")
 
     def stablizeTurn(self,angle):
-        pass
+        if angle >=70 or angle<=110:
+            if abs(self.currentAngle -angle) >=5:  
+                self.currentAngle = angle
+                print("currentAngle=",self.currentAngle)
+                GPIO.output(self.servoPIN,True)
+                self.p.ChangeDutyCycle(2+(self.currentAngle/18))
+                time.sleep(0.1)
+                GPIO.output(self.servoPIN,False)
+                self.p.ChangeDutyCycle(0)
     def clean(self):
         self.p.stop()
         GPIO.cleanup()
