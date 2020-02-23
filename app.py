@@ -2,14 +2,19 @@
 from importlib import import_module
 import os
 from flask import Flask, render_template, Response
+from flask_socketio import SocketIO
+import time
 from camera_opencv import Camera
 from camera import CameraOff
-from carControl1 import CarControls
+#from carControl1 import CarControls
 
 #Global Actions
 showCamera = True
-carControls = CarControls()
+#carControls = CarControls()
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'Mritunjay'
+socketio = SocketIO(app)
+sensorValue=90
 
 #Action Functoins
 @app.route('/toggleCamera')
@@ -85,5 +90,19 @@ def exit():
     carControls.clean()
     return ("cleaned")
 
+
+@socketio.on('connect')
+def connect_handler():
+    print("connected")
+    time.sleep(1)
+    socketio.emit('ultrasonic', {"val": "connection Started"})
+@socketio.on('ultrasonic')
+def ultrasonic_handler():
+    global sensorValue
+    time.sleep(1)
+    sensorValue +=1
+    socketio.emit('ultrasonic', {"val": sensorValue})
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', threaded=True)
+    socketio.run(app,host='0.0.0.0', debug=True)

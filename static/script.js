@@ -68,3 +68,13 @@ function signHandler() {
     document.getElementById("sign-detection").classList.toggle("function-inactive")
     document.getElementById("sign-detection").classList.toggle("function-active")
 }
+
+
+var socket = io();
+    socket.on('connect', function() {
+       console.log("Connection Established")
+    });
+    socket.on( 'ultrasonic', function( msg ) {
+        document.getElementById('distance-box').innerHTML = '<p style="color:#fff" >Distance from front:'+msg.val+'</p>'
+        socket.emit('ultrasonic')
+    })
