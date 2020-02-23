@@ -1,3 +1,4 @@
+from __future__ import division
 import RPi.GPIO as GPIO
 import time
 
@@ -28,20 +29,20 @@ class CarControls:
         print("setup Complete")
 
     def left(self):
-        self.currentAngle = self.currentAngle-15 if self.currentAngle > 70 else 70
+        self.currentAngle = self.currentAngle-5 if self.currentAngle > 70 else 70
         print("currentAngle=",self.currentAngle)
         GPIO.output(self.servoPIN,True)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
-        time.sleep(1)
+        time.sleep(0.1)
         GPIO.output(self.servoPIN,False)
         self.p.ChangeDutyCycle(0)
 
     def right(self):
-        self.currentAngle = self.currentAngle+15 if self.currentAngle < 110 else 110
+        self.currentAngle = self.currentAngle+5 if self.currentAngle < 110 else 110
         print("currentAngle=",self.currentAngle)
         GPIO.output(self.servoPIN,True)
         self.p.ChangeDutyCycle(2+(self.currentAngle/18))
-        time.sleep(1)
+        time.sleep(0.1)
         GPIO.output(self.servoPIN,False)
         self.p.ChangeDutyCycle(0)
 
