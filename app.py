@@ -14,7 +14,6 @@ carControls = CarControls()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Mritunjay'
 socketio = SocketIO(app)
-sensorValue=90
 
 #Action Functoins
 @app.route('/toggleCamera')
@@ -96,12 +95,12 @@ def connect_handler():
     print("connected")
     time.sleep(1)
     socketio.emit('ultrasonic', {"val": "connection Started"})
+
 @socketio.on('ultrasonic')
 def ultrasonic_handler():
-    global sensorValue
+    global carControls
     time.sleep(1)
-    sensorValue +=1
-    socketio.emit('ultrasonic', {"val": sensorValue})
+    socketio.emit('ultrasonic', {"front": carControls.distanceFront(),'back':carControls.distanceBack()})
 
 
 if __name__ == '__main__':

@@ -11,11 +11,20 @@ class CarControls:
         self.Forward = 26
         self.Backward =20
         self.sleeptime = 1
+        self.frontTrig=17
+        self.frontEcho=18
+        self.backTrig=22
+        self.backEcho=23
         print("initialization Complete")
         self.setup()
+        
 
     def setup(self):
         GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.frontEcho, GPIO.OUT)
+        GPIO.setup(self.frontTrig, GPIO.IN)
+        GPIO.setup(self.backEcho, GPIO.OUT)
+        GPIO.setup(self.backTrig, GPIO.IN)
         GPIO.setup(self.servoPIN, GPIO.OUT)
         GPIO.setup(self.Forward, GPIO.OUT)
         GPIO.setup(self.Backward, GPIO.OUT)
@@ -26,8 +35,36 @@ class CarControls:
         self.p.ChangeDutyCycle(7)
         time.sleep(2)
         self.p.ChangeDutyCycle(0)
-        print("setup Complete")
 
+        print("setup Complete")
+    def distanceFront(self):
+        GPIO.output(self.frontTrig, True)    
+        time.sleep(0.00001)
+        GPIO.output(self.frontTrig, False)
+        StartTime = time.time()
+        StopTime = time.time()
+        # save StartTime
+        while GPIO.input(self.frontEcho) == 0:
+            StartTime = time.time()
+        while GPIO.input(self.frontEcho) == 1:
+            StopTime = time.time()    
+        TimeElapsed = StopTime - StartTime
+        distance = (TimeElapsed * 34300) / 2
+        return distance
+    def distanceBack(self):
+        GPIO.output(self.backTrig, True)    
+        time.sleep(0.00001)
+        GPIO.output(self.backTrig, False)
+        StartTime = time.time()
+        StopTime = time.time()
+        # save StartTime
+        while GPIO.input(self.backEcho) == 0:
+            StartTime = time.time()
+        while GPIO.input(self.backEcho) == 1:
+            StopTime = time.time()    
+        TimeElapsed = StopTime - StartTime
+        distance = (TimeElapsed * 34300) / 2
+        return distance
     def left(self):
         self.currentAngle = self.currentAngle-5 if self.currentAngle >= 70 else 70
         print("currentAngle=",self.currentAngle)

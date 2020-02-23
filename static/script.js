@@ -74,7 +74,7 @@ var socket = io();
     socket.on('connect', function() {
        console.log("Connection Established")
     });
-    socket.on( 'ultrasonic', function( msg ) {
-        document.getElementById('distance-box').innerHTML = '<p style="color:#fff" >Distance from front:'+msg.val+'</p>'
+    socket.on( 'ultrasonic', function(distance) {
+        document.getElementById('distance-box').innerHTML = '<p style="color:#fff" >Distance from front:'+distance.front+'</p><br/><p style="color:#fff" >Distance from back:'+distance.back+'</p>'
         socket.emit('ultrasonic')
     })
