@@ -28,8 +28,8 @@ def toggleCamera():
     return ("Camera is", showCamera)
 
 
-@app.route('/toggleautoPiolet')
-def toggleautoPiolet():
+@app.route('/toggleAutoPiolet')
+def toggleAutoPiolet():
     global autoPiolet
     if autoPiolet:
         autoPiolet = False

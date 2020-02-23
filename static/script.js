@@ -63,6 +63,10 @@ function turnOffCar() {
 function autoPioletHandler() {
     document.getElementById("auto-piolet").classList.toggle("function-inactive")
     document.getElementById("auto-piolet").classList.toggle("function-active")
+    fetch(window.location.href + 'toggleAutoPiolet').then((data) => {
+        console.log(data);
+        
+    })
 }
 function signHandler() {
     document.getElementById("sign-detection").classList.toggle("function-inactive")
