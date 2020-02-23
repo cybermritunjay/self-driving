@@ -6,11 +6,11 @@ from flask_socketio import SocketIO
 import time
 from camera_opencv import Camera
 from camera import CameraOff
-#from carControl1 import CarControls
+from carControl1 import CarControls
 
 #Global Actions
 showCamera = True
-#carControls = CarControls()
+carControls = CarControls()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Mritunjay'
 socketio = SocketIO(app)
