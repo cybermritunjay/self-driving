@@ -2,7 +2,7 @@
 ------NAME----------PIN-----PHY------RPi
  1.)Servo Motor---> 5V   => x________x
                     GND  => 34_______GND
-                    DATA => 33_______12
+                    DATA => 33_______13
  2.)Main Motor ---> Pin1 => 37_______26
                     Pin2 => 38_______20
                     GND  => 39_______GND
@@ -41,7 +41,7 @@ usBackEcho =18
 motor1 =26
 motor2=20
 #servo
-servo =12
+servo =13
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(usBackTrig, GPIO.IN)
