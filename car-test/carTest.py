@@ -73,9 +73,9 @@ def backLightCheck():
     GPIO.output(backLight, GPIO.LOW)
 
 def usFrontCheck():
-    GPIO.output(usFrontTrig, True)    
+    GPIO.output(usFrontTrig, GPIO.HIGH)    
     time.sleep(0.00001)
-    GPIO.output(usFrontTrig, False)
+    GPIO.output(usFrontTrig, GPIO.LOW)
     StartTime = time.time()
     StopTime = time.time()
         # save StartTime
@@ -88,9 +88,9 @@ def usFrontCheck():
     print("distance Front= ",distance)
 
 def usBackCheck():
-    GPIO.output(usBackTrig, True)    
+    GPIO.output(usBackTrig, GPIO.HIGH)    
     time.sleep(0.00001)
-    GPIO.output(usBackTrig, False)
+    GPIO.output(usBackTrig, GPIO.LOW)
     StartTime = time.time()
     StopTime = time.time()
         # save StartTime
