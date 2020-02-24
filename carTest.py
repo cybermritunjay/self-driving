@@ -155,46 +155,47 @@ try:
         usBackCheck()
         time.sleep(0.5)
     elif choice == 2:
-        inp = int(input('Enter 1 for Horn \n Enter 2 for Front Lights \nEnter 3 for Back Lights \nEnter 4 for Motor \nEnter 5 For Servo \nEnter 6 for Front Ultrasonic \nEnter 7 for Back Ultersonic'))
-        if inp ==1:
-            print("Checking Horn")
-            hornCheck()
-        elif inp ==2:
-            print("Checking front Lights")
-            frontLightCheck()
-        elif inp ==3:
-            print("Checking back Lights")
-            backLightCheck()
-        elif inp == 4:
-            print("Checking Main Motor")
-            motorCheck()
-        elif inp == 5:
-            print("Checking Servo Motor")
-            servoCheck()
-        elif inp == 6:
-            print("Checking Front Ultersonic")
-            usFrontCheck()
-            time.sleep(0.5)
-            usFrontCheck()
-            time.sleep(0.5)
-            usFrontCheck()
-            time.sleep(0.5)
-            usFrontCheck()
-            time.sleep(0.5)
-            usFrontCheck()
-            time.sleep(0.5)
-        elif inp == 7:
-            print("Checking Back Ultersonic")
-            usBackCheck()
-            time.sleep(0.5)
-            usBackCheck()
-            time.sleep(0.5)
-            usBackCheck()
-            time.sleep(0.5)
-            usBackCheck()
-            time.sleep(0.5)
-            usBackCheck()
-            time.sleep(0.5)
+        while True:
+            inp = int(input('Enter 1 for Horn \n Enter 2 for Front Lights \nEnter 3 for Back Lights \nEnter 4 for Motor \nEnter 5 For Servo \nEnter 6 for Front Ultrasonic \nEnter 7 for Back Ultersonic'))
+            if inp ==1:
+                print("Checking Horn")
+                hornCheck()
+            elif inp ==2:
+                print("Checking front Lights")
+                frontLightCheck()
+            elif inp ==3:
+                print("Checking back Lights")
+                backLightCheck()
+            elif inp == 4:
+                print("Checking Main Motor")
+                motorCheck()
+            elif inp == 5:
+                print("Checking Servo Motor")
+                servoCheck()
+            elif inp == 6:
+                print("Checking Front Ultersonic")
+                usFrontCheck()
+                time.sleep(0.5)
+                usFrontCheck()
+                time.sleep(0.5)
+                usFrontCheck()
+                time.sleep(0.5)
+                usFrontCheck()
+                time.sleep(0.5)
+                usFrontCheck()
+                time.sleep(0.5)
+            elif inp == 7:
+                print("Checking Back Ultersonic")
+                usBackCheck()
+                time.sleep(0.5)
+                usBackCheck()
+                time.sleep(0.5)
+                usBackCheck()
+                time.sleep(0.5)
+                usBackCheck()
+                time.sleep(0.5)
+                usBackCheck()
+                time.sleep(0.5)
 except:
     p.stop()
     GPIO.cleanup()
