@@ -1,0 +1,26 @@
+<annotation>
+	<folder>sign</folder>
+	<filename>stop3.jpg</filename>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\training data\sign\stop3.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2592</width>
+		<height>1944</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Stop</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1503</xmin>
+			<ymin>674</ymin>
+			<xmax>1716</xmax>
+			<ymax>857</ymax>
+		</bndbox>
+	</object>
+</annotation>
