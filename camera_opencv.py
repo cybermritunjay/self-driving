@@ -32,8 +32,8 @@ class Camera(BaseCamera):
         while True:
             # read current frame
             _, img = camera.read()
-            img, Camera.curr_steering_angle = follow_lane(
-                img, Camera.curr_steering_angle)
+            #img, Camera.curr_steering_angle = follow_lane(
+            #    img, Camera.curr_steering_angle)
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes(), Camera.curr_steering_angle
 

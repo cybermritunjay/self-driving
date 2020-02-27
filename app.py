@@ -116,11 +116,11 @@ def connect_handler():
 def ultrasonic_handler():
     global carControls
     time.sleep(1)
-    #socketio.emit('ultrasonic', {"front": "112",'back':"112"})
-    if autoPiolet:
-        carControls.stablizeTurn(stearingAngle)
-    socketio.emit('ultrasonic', {
-                  "front": carControls.distanceFront(), 'back': carControls.distanceBack()})
+    socketio.emit('ultrasonic', {"front": "112",'back':"112"})
+    #if autoPiolet:
+    #    carControls.stablizeTurn(stearingAngle)
+    #socketio.emit('ultrasonic', {
+    #              "front": carControls.distanceFront(), 'back': carControls.distanceBack()})
 
 
 if __name__ == '__main__':
