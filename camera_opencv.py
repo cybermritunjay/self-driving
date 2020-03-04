@@ -30,7 +30,7 @@ class Camera(object):
         self.camera.set(3, 640)
         self.camera.set(4, 480)
         self.OBJECT_MODEL_NAME = 'SIGN DETECTION MODEL'
-        self.PATH_TO_CKPT = './training data/trained model/fine_tuned_model/frozen_inference_graph.pb'
+        self.PATH_TO_CKPT = './training data/trained model/fine_tuned_model/saved_model'
         self.PATH_TO_LABELS = './training data/trained model/fine_tuned_model/label_map.pbtxt'
         self.NUM_CLASSES = 10
         self.object_model = load_model(self.PATH_TO_CKPT)

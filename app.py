@@ -6,13 +6,13 @@ from flask_socketio import SocketIO
 import time
 from camera_opencv import Camera
 from camera import CameraOff
-from carControl1 import CarControls
+#from carControl1 import CarControls
 
 #Global Actions
 showCamera = True
 laneDetection = True
 objectDetection = True
-carControls = CarControls()
+#carControls = CarControls()
 app = Flask(__name__)
 stearingAngle = 0
 app.config['SECRET_KEY'] = 'Mritunjay'
@@ -146,11 +146,11 @@ def connect_handler():
 def ultrasonic_handler():
     global carControls
     time.sleep(1)
-    #socketio.emit('ultrasonic', {"front": "112",'back':"112"})
+    socketio.emit('ultrasonic', {"front": "112",'back':"112"})
     #if autoPiolet:
     #    carControls.stablizeTurn(stearingAngle)
-    socketio.emit('ultrasonic', {
-                  "front": carControls.distanceFront(), 'back': carControls.distanceBack()})
+    #socketio.emit('ultrasonic', {
+    #              "front": carControls.distanceFront(), 'back': carControls.distanceBack()})
 
 
 if __name__ == '__main__':
