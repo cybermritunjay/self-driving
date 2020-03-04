@@ -32,7 +32,8 @@ def gen(cameraOff, camera):
 
     while True:
         frame = cameraOff.get_frame()
-        dummy, stearingAngle = camera.get_frame(False,False)
+        dummy, stearingAngle,objects = camera.get_frame(False,False)
+        print(objects)
         if showCamera:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + dummy + b'\r\n')
