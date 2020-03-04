@@ -1,6 +1,7 @@
 import os
 import cv2
 from base_camera import BaseCamera
+
 import numpy as np
 import logging
 import math
@@ -8,47 +9,53 @@ import datetime
 import sys
 from imgaug import augmenters as img_aug
 from tensorflow.keras.models import load_model
-    
-class Camera(BaseCamera):
+
+
+class Camera(object):
     video_source = 0
     curr_steering_angle = 90
-    model_path='training data/trained model/lane/lane_navigation_final.h5'
     def __init__(self):
+        self.model_path = 'training data/trained model/lane/lane_navigation_final.h5'
+        self.model = load_model(self.model_path)
         if os.environ.get('OPENCV_CAMERA_SOURCE'):
             Camera.set_video_source(int(os.environ['OPENCV_CAMERA_SOURCE']))
-        super(Camera, self).__init__()
+        self.camera = cv2.VideoCapture(0)
+        if not self.camera.isOpened():
+            raise RuntimeError('Could not start camera.')
+        self.camera.set(3, 640)
+        self.camera.set(4, 480)
 
     @staticmethod
     def set_video_source(source):
         Camera.video_source = source
 
-    @staticmethod
-    def frames():
-        camera = cv2.VideoCapture(0)
-        if not camera.isOpened():
-            raise RuntimeError('Could not start camera.')
-        camera.set(3, 640)
-        camera.set(4, 480)
-        while True:
-            # read current frame
-            _, img = camera.read()
-            #img, Camera.curr_steering_angle = follow_lane(
-            #    img, Camera.curr_steering_angle)
-            # encode as a jpeg image and return it
-            yield cv2.imencode('.jpg', img)[1].tobytes(), Camera.curr_steering_angle
+    def get_frame(self,laneDetection,objectDetection):
+        ret, img = self.camera.read()
+        if ret:
+            img,Camera.curr_steering_angle = follow_lane(img,self.model,objectDetection,laneDetection)
+            return cv2.imencode('.jpg', img)[1].tobytes(), Camera.curr_steering_angle
 
-def follow_lane(frame,model):
+def follow_lane(frame, model,detectobject,detectLane):
     ##print("follow_lane")
     # Main entry point of the lane follower
-    curr_steering_angle = compute_steering_angle(frame,model)
-    lane_lines, frame_with_lane = detect_lane(frame)
-    final_frame = display_heading_line(frame_with_lane, curr_steering_angle)
-    return final_frame
+    if not detectLane and not detectobject:
+        return frame,90
+    if detectobject:
+        curr_steering_angle = compute_steering_angle(frame, model)
+    else:
+        curr_steering_angle = 90
+    if detectLane:
+        lane_lines, frame = detect_lane(frame)
+    final_frame = display_heading_line(frame, curr_steering_angle)
+    return final_frame,curr_steering_angle
+
 def preprocessImage(image):
     brightness = img_aug.Multiply(4.0)
     image = brightness.augment_image(image)
-    image = cv2.GaussianBlur(image, (3,3), 0)
+    image = cv2.GaussianBlur(image, (3, 3), 0)
     return image
+
+
 def detect_lane(frame):
     ##print("detect_lane")
     frameProcessed = preprocessImage(frame)
@@ -63,6 +70,7 @@ def detect_lane(frame):
     lane_lines_image = display_lines(frame, lane_lines)
 
     return lane_lines, lane_lines_image
+
 
 def average_slope_intercept(frame, line_segments):
     ##print("average_slope_intercept")
@@ -80,8 +88,10 @@ def average_slope_intercept(frame, line_segments):
     right_fit = []
 
     boundary = 1/3
-    left_region_boundary = width * (1 - boundary)  # left lane line segment should be on left 2/3 of the screen
-    right_region_boundary = width * boundary # right lane line segment should be on left 2/3 of the screen
+    # left lane line segment should be on left 2/3 of the screen
+    left_region_boundary = width * (1 - boundary)
+    # right lane line segment should be on left 2/3 of the screen
+    right_region_boundary = width * boundary
 
     for line_segment in line_segments:
         for x1, y1, x2, y2 in line_segment:
@@ -103,8 +113,8 @@ def average_slope_intercept(frame, line_segments):
     if len(right_fit) > 0:
         lane_lines.append(make_points(frame, right_fit_average))
 
-
     return lane_lines
+
 
 def make_points(frame, line):
     #print("make_point")
@@ -118,6 +128,7 @@ def make_points(frame, line):
     x2 = max(-width, min(2 * width, int((y2 - intercept) / slope)))
     return [[x1, y1, x2, y2]]
 
+
 def detect_line_segments(cropped_edges):
     #print("detect_line_segments")
     # tuning min_threshold, minLineLength, maxLineGap is a trial and error process by hand
@@ -127,6 +138,7 @@ def detect_line_segments(cropped_edges):
     line_segments = cv2.HoughLinesP(cropped_edges, rho, angle, min_threshold, np.array([]), minLineLength=8,
                                     maxLineGap=4)
     return line_segments
+
 
 def region_of_interest(canny):
     #print("region_of_interest")
@@ -146,15 +158,18 @@ def region_of_interest(canny):
     masked_image = cv2.bitwise_and(canny, mask)
     return masked_image
 
+
 def display_lines(frame, lines, line_color=(0, 255, 0), line_width=10):
     #print("display_lines")
     line_image = np.zeros_like(frame)
     if lines is not None:
         for line in lines:
             for x1, y1, x2, y2 in line:
-                cv2.line(line_image, (x1, y1), (x2, y2), line_color, line_width)
+                cv2.line(line_image, (x1, y1), (x2, y2),
+                         line_color, line_width)
     line_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
     return line_image
+
 
 def detect_edges(frame):
     #print("detect_edges")
@@ -169,12 +184,14 @@ def detect_edges(frame):
 
     return edges
 
-def compute_steering_angle(frame,model):
+
+def compute_steering_angle(frame, model):
     #print("compute_steering_angle")
     preprocessed = img_preprocess(frame)
     X = np.asarray([preprocessed])
     steering_angle = model.predict(X)[0]
-    return int(steering_angle + 0.5) # round the nearest integer
+    return int(steering_angle + 0.5)  # round the nearest integer
+
 
 def adjust_brightness(image):
     #print("adjust_brightness")
@@ -183,21 +200,27 @@ def adjust_brightness(image):
     image = brightness.augment_image(image)
     return image
 
+
 def img_preprocess(image):
     #print("img_preprocess")
     height, _, _ = image.shape
     image = adjust_brightness(image)
-    image = image[int(height/2):,:,:]  # remove top half of the image, as it is not relevant for lane following
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)  # Nvidia model said it is best to use YUV color space
-    image = cv2.GaussianBlur(image, (15,15), 0)
-    image = cv2.resize(image, (200,66)) # input image size (200,66) Nvidia model
-    image = image / 255 # normalizing, the processed image becomes black for some reason.  do we need this?
+    # remove top half of the image, as it is not relevant for lane following
+    image = image[int(height/2):, :, :]
+    # Nvidia model said it is best to use YUV color space
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+    image = cv2.GaussianBlur(image, (15, 15), 0)
+    # input image size (200,66) Nvidia model
+    image = cv2.resize(image, (200, 66))
+    # normalizing, the processed image becomes black for some reason.  do we need this?
+    image = image / 255
     return image
+
 
 def display_heading_line(frame, steering_angle, line_color=(0, 0, 255), line_width=5, ):
     #print("display_heading_line")
     heading_image = np.zeros_like(frame)
-    height, width, _ = frame.shape 
+    height, width, _ = frame.shape
     steering_angle_radian = steering_angle / 180.0 * math.pi
     x1 = int(width / 2)
     y1 = height
@@ -207,19 +230,25 @@ def display_heading_line(frame, steering_angle, line_color=(0, 0, 255), line_wid
     cv2.line(heading_image, (x1, y1), (x2, y2), line_color, line_width)
     heading_image = cv2.addWeighted(frame, 0.8, heading_image, 1, 1)
     return heading_image
+
 ############################
 # Test Functions
 ############################
+
+
 def test_photo(file):
-    model = load_model('training data/trained model/lane/lane_navigation_final.h5')
+    model = load_model(
+        'training data/trained model/lane/lane_navigation_final.h5')
     frame = cv2.imread(file)
-    combo_image = follow_lane(frame,model)
+    combo_image = follow_lane(frame, model)
     cv2.imshow('final', combo_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+
 def test_video(video_file):
-    model = load_model('training data/trained model/lane/lane_navigation_final.h5')
+    model = load_model(
+        'training data/trained model/lane/lane_navigation_final.h5')
     cap = cv2.VideoCapture(video_file + '.avi')
     # skip first second of video.
     for i in range(3):
@@ -228,7 +257,7 @@ def test_video(video_file):
     try:
         while cap.isOpened():
             _, frame = cap.read()
-            combo_image = follow_lane(frame,model)
+            combo_image = follow_lane(frame, model)
             cv2.imshow("Deep Learning", combo_image)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

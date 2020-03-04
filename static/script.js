@@ -71,6 +71,24 @@ function autoPioletHandler() {
 function signHandler() {
     document.getElementById("sign-detection").classList.toggle("function-inactive")
     document.getElementById("sign-detection").classList.toggle("function-active")
+    fetch(window.location.href + 'toggleSignDetection').then((data) => {
+        console.log(data);
+    });
+}
+function horn() {
+    //document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_right.jpg") }} ')`;
+    fetch(window.location.href + 'horn').then((data) => {
+        console.log(data);
+        //document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` 
+    })
+}
+function lights() {
+    //document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick_right.jpg") }} ')`;
+    fetch(window.location.href + 'lights').then((data) => {
+        console.log(data);
+        //document.getElementById("joystick-svg").style.backgroundImage = `url('{{ url_for('static', filename="img/joystick/Analog_Joystick.jpg") }} ')` 
+    hideCover()
+    })
 }
 
 

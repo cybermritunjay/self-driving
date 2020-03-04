@@ -68,10 +68,10 @@ class BaseCamera(object):
             BaseCamera.thread.start()
 
             # wait until frames are available
-            while self.get_frame() is None:
+            while self.get_frame(self.laneDetection,self.objectDetection) is None:
                 time.sleep(0)
 
-    def get_frame(self):
+    def get_frame(self,laneDetection,objectDetection):
         """Return the current camera frame."""
         BaseCamera.last_access = time.time()
 
@@ -90,7 +90,7 @@ class BaseCamera(object):
     def _thread(cls):
         """Camera background thread."""
         print('Starting camera thread.')
-        frames_iterator = cls.frames()
+        frames_iterator = cls.frames(cls.objectDetection,cls.laneDetection)
         for frame in frames_iterator:
             BaseCamera.frame = frame
             BaseCamera.event.set()  # send signal to clients
