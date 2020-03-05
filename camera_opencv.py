@@ -1,9 +1,6 @@
 import os
 import cv2
-from base_camera import BaseCamera
-
 import numpy as np
-import logging
 import math
 import datetime
 import sys
