@@ -13,7 +13,7 @@ from __future__ import absolute_import
 import os
 import io
 import pandas as pd
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from PIL import Image
 from object_detection.utils import dataset_util
@@ -26,13 +26,14 @@ flags.DEFINE_string('image_dir', '', 'Path to images')
 FLAGS = flags.FLAGS
 
 
+
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
     if row_label == 'blow-horn':
         return 1
-    elif row_label == 'green Light':
+    elif row_label == 'green-light':
         return 2
-    elif row_label =='Go Stright':
+    elif row_label =='go-stright':
         return 3
     elif row_label =='keep-left':
         return 4
@@ -42,7 +43,7 @@ def class_text_to_int(row_label):
         return 6
     elif row_label =='speed-50':
         return 7
-    elif row_label =='Stop':
+    elif row_label =='stop':
         return 8
     elif row_label =='u-turn':
         return 9
@@ -96,6 +97,7 @@ def create_tf_example(group, path):
 
 
 def main(_):
+    print(FLAGS)
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
     path = os.path.join(FLAGS.image_dir)
     examples = pd.read_csv(FLAGS.csv_input)

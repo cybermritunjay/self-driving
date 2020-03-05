@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>leepleft1.jpg</filename>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\training data\sign\train\leepleft1.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1300</width>
+		<height>975</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>keep-left</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>948</xmin>
+			<ymin>206</ymin>
+			<xmax>1156</xmax>
+			<ymax>428</ymax>
+		</bndbox>
+	</object>
+</annotation>
