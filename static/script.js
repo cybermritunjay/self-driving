@@ -100,3 +100,7 @@ var socket = io();
         document.getElementById('distance-box').innerHTML = '<p style="color:#fff" >Distance from front:'+distance.front+'</p><br/><p style="color:#fff" >Distance from back:'+distance.back+'</p>'
         socket.emit('ultrasonic')
     })
+    socket.on( 'u-turn', function(distance) {
+        //showCover()
+        alert("Please Take u-Turn ")
+    })

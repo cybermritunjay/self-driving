@@ -79,6 +79,7 @@ class Camera(object):
             use_normalized_coordinates=True,
             line_thickness=8,
             min_score_thresh=0.85)
+        self.objects = get_objects(classes,self.category_index,scores)
         return Laneframe
     
     def get_frame(self,isLaneDetect,isObjectDetect):
@@ -264,3 +265,16 @@ def display_heading_line(frame, steering_angle, line_color=(0, 0, 255), line_wid
     cv2.line(heading_image, (x1, y1), (x2, y2), line_color, line_width)
     heading_image = cv2.addWeighted(frame, 0.8, heading_image, 1, 1)
     return heading_image
+
+
+#find objects
+def get_objects(classes,category_index,scores):
+    o = []
+    threshold = 0.98 # in order to get higher percentages you need to lower this number; usually at 0.01 you get 100% predicted objects
+    for index, value in enumerate(classes[0]):
+        object_dict = {}
+        if scores[0, index] > threshold:
+            object_dict[(category_index.get(value)).get('name').encode('utf8')] = \
+                        scores[0, index]
+            o.append(object_dict.keys())
+    return o

@@ -12,12 +12,64 @@ from carControl1 import CarControls
 showCamera = True
 laneDetection = True
 objectDetection = True
+
+Stop = False
+blowHornTime = time.time()
+goStright = False
+noHorn = False
+keepLeftTime = False
+uTurnActive = False
+
 carControls = CarControls()
 app = Flask(__name__)
 stearingAngle = 0
 app.config['SECRET_KEY'] = 'Mritunjay'
 socketio = SocketIO(app)
 
+
+#Sign handler
+def handelSign(obj):
+    global Stop
+    global goStright
+    global noHorn
+    global keepLeftTime
+    global blowHornTime
+    global uTurnActive
+
+    if 'blow-horn' in obj:
+        if time.time() - blowHornTime > 10:
+            carControls.blowHorn()
+            blowHornTime = time.time()
+    if 'keep-left' in obj:
+        if time.time() - keepLeftTime > 10:
+            carControls.left()
+            time.sleep(0.3)
+            carControls.right()
+            keepLeftTime = time.time()
+    if 'stop' in obj:
+        Stop = True 
+    else:
+        Stop = False   
+    if 'no-horn' in obj:
+        noHorn = True
+    else:
+        noHorn=False
+    if 'go-stright' in obj:
+        carControls.goForward()
+        goStright = True
+    else:
+        goStright = False
+    if 'speed-50' in obj:
+        carControls.speed50 = True
+    else:
+        carControls.speed50 = False
+    
+    if 'u-turn' in obj:
+        if not uTurnActive:
+            uTurnActive = True
+            socketio.emit('u-turn')
+            carControls.uTurn()
+            uTurnActive = False
 
 #Main Route
 @app.route('/')
@@ -29,17 +81,17 @@ def index():
 def gen(cameraOff, camera):
     """Video streaming generator function."""
     global stearingAngle
-    while True:
-        frame = cameraOff.get_frame()
-        dummy, stearingAngle,objects = camera.get_frame(laneDetection,objectDetection)
-        if objectDetection:
-            carControls.handelSign(objects)
-        #if laneDetection:
-        #    carControls.stablizeTurn(stearingAngle)
+    while True:        
         if showCamera:
+            dummy, stearingAngle,objects = camera.get_frame(laneDetection,objectDetection)
+            if objectDetection:
+                handelSign(objects)
+            if laneDetection:
+                carControls.stablizeTurn(stearingAngle)
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + dummy + b'\r\n')
         else:
+            frame = cameraOff.get_frame()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -98,6 +150,8 @@ def rightTurn():
 #forward Functoins
 @app.route('/forward')
 def forward():
+    if Stop:
+        return
     global carControls
     carControls.goForward()
     return ("go forward")
@@ -112,6 +166,8 @@ def backward():
 #break Functoins
 @app.route('/stop')
 def stop():
+    if goStright:
+        return
     global carControls
     carControls.stop()
     return ("breaks applied")
@@ -119,6 +175,8 @@ def stop():
 #horn function
 @app.route('/horn')
 def horn():
+    if noHorn:
+        return
     global carControls
     carControls.blowHorn()
     return ("horn")

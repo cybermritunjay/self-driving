@@ -1,0 +1,27 @@
+item {
+  id: 1
+  name: 'blow-horn'
+},
+item {
+  id: 2
+  name: 'go-stright'
+},
+item {
+  id: 3
+  name: 'keep-left'
+},item {
+  id: 4
+  name: 'no-horn'
+},
+item {
+  id: 5
+  name: 'speed-50'
+},
+item {
+  id: 6
+  name: 'stop'
+},
+item {
+  id: 7
+  name: 'u-turn'
+}

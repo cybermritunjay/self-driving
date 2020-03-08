@@ -12,6 +12,7 @@ class CarControls:
         self.servo = None
         self.forward = None
         self.backward = None
+        self.speed50 = False
 
         self.servoPIN = 13
 
@@ -144,7 +145,8 @@ class CarControls:
             return
         self.forwardSpeed = self.forwardSpeed+25 if self.forwardSpeed < 100 else 100
         self.backwardSpeed = 0
-
+        if self.speed50:
+            self.forwardSpeed = 50
         GPIO.output(self.backwardPin, GPIO.LOW)
         self.backward.ChangeDutyCycle(self.backwardSpeed)
 
@@ -202,7 +204,6 @@ class CarControls:
         self.backward.stop()
         GPIO.cleanup()
 
-    def handelSign(self,obj):
-        if self.blockControls:
-            return
-        print(obj)
+    def uTurn(self):
+        pass
+        """Turn full Left Then Stright """
