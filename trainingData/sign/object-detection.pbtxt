@@ -4,36 +4,25 @@ item {
 },
 item {
   id: 2
-  name: 'green-light'
-},
-item {
-  id: 3
   name: 'go-stright'
 },
 item {
-  id: 4
+  id: 3
   name: 'keep-left'
-},item {
-  id: 5
+},
+item {
+  id: 4
   name: 'no-horn'
 },
 item {
-  id: 6
-  name: 'red-light'
-},
-item {
-  id: 7
+  id: 5
   name: 'speed-50'
 },
 item {
-  id: 8
+  id: 6
   name: 'stop'
 },
 item {
-  id: 9
+  id: 7
   name: 'u-turn'
-},
-item {
-  id: 10
-  name: 'yellow-light'
 }
