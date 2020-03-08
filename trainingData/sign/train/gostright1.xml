@@ -1,7 +1,7 @@
 <annotation>
 	<folder>train</folder>
 	<filename>gostright1.jpg</filename>
-	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\training data\sign\train\gostright1.jpg</path>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\train\gostright1.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -17,10 +17,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>1038</xmin>
-			<ymin>167</ymin>
-			<xmax>1293</xmax>
-			<ymax>393</ymax>
+			<xmin>1045</xmin>
+			<ymin>162</ymin>
+			<xmax>1296</xmax>
+			<ymax>398</ymax>
 		</bndbox>
 	</object>
 </annotation>

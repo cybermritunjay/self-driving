@@ -1,0 +1,26 @@
+<annotation>
+	<folder>test</folder>
+	<filename>horn2.jpg</filename>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\test\horn2.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1308</width>
+		<height>981</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>blow-horn</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1067</xmin>
+			<ymin>294</ymin>
+			<xmax>1210</xmax>
+			<ymax>441</ymax>
+		</bndbox>
+	</object>
+</annotation>

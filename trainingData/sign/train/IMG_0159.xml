@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>IMG_0159.jpg</filename>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\train\IMG_0159.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>767</width>
+		<height>576</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>speed-50</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>227</xmin>
+			<ymin>132</ymin>
+			<xmax>653</xmax>
+			<ymax>566</ymax>
+		</bndbox>
+	</object>
+</annotation>

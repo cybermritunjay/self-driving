@@ -4,15 +4,15 @@ import os
 from flask import Flask, render_template, Response
 from flask_socketio import SocketIO
 import time
-from camera_opencv import Camera
-from camera import CameraOff
-#from carControl1 import CarControls
+from lane_object_detection import Camera
+from cameraOff import CameraOff
+from carControl1 import CarControls
 
 #Global Actions
 showCamera = True
 laneDetection = True
 objectDetection = True
-#carControls = CarControls()
+carControls = CarControls()
 app = Flask(__name__)
 stearingAngle = 0
 app.config['SECRET_KEY'] = 'Mritunjay'
@@ -29,11 +29,13 @@ def index():
 def gen(cameraOff, camera):
     """Video streaming generator function."""
     global stearingAngle
-
     while True:
         frame = cameraOff.get_frame()
-        dummy, stearingAngle,objects = camera.get_frame(False,False)
-        print(objects)
+        dummy, stearingAngle,objects = camera.get_frame(laneDetection,objectDetection)
+        if objectDetection:
+            carControls.handelSign(objects)
+        #if laneDetection:
+        #    carControls.stablizeTurn(stearingAngle)
         if showCamera:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + dummy + b'\r\n')
@@ -47,7 +49,6 @@ def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(CameraOff(), Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 #Action Functoins
 #toggle Camera
@@ -70,7 +71,6 @@ def toggleAutoPiolet():
         laneDetection = True
     return ("Camera is", laneDetection)
 
-
 #Toggle Sign Detection
 @app.route('/toggleSignDetection')
 def toggleSignDetection():
@@ -87,6 +87,7 @@ def leftTurn():
     global carControls
     carControls.left()
     return ("Left Turn Taken")
+
 #right Functoins
 @app.route('/right-turn')
 def rightTurn():
@@ -100,12 +101,14 @@ def forward():
     global carControls
     carControls.goForward()
     return ("go forward")
+
 #backward Functoins
 @app.route('/backward')
 def backward():
     global carControls
     carControls.reverse()
     return ("go backwards")
+
 #break Functoins
 @app.route('/stop')
 def stop():
@@ -147,8 +150,6 @@ def ultrasonic_handler():
     global carControls
     time.sleep(1)
     socketio.emit('ultrasonic', {"front": "112",'back':"112"})
-    #if autoPiolet:
-    #    carControls.stablizeTurn(stearingAngle)
     #socketio.emit('ultrasonic', {
     #              "front": carControls.distanceFront(), 'back': carControls.distanceBack()})
 

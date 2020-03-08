@@ -1,7 +1,7 @@
 <annotation>
 	<folder>train</folder>
 	<filename>speed50.jpg</filename>
-	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\training data\sign\train\speed50.jpg</path>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\train\speed50.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -18,9 +18,9 @@
 		<difficult>0</difficult>
 		<bndbox>
 			<xmin>1030</xmin>
-			<ymin>102</ymin>
-			<xmax>1285</xmax>
-			<ymax>381</ymax>
+			<ymin>100</ymin>
+			<xmax>1273</xmax>
+			<ymax>378</ymax>
 		</bndbox>
 	</object>
 </annotation>

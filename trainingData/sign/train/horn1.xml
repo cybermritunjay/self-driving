@@ -1,7 +1,7 @@
 <annotation>
 	<folder>train</folder>
 	<filename>horn1.jpg</filename>
-	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\training data\sign\train\horn1.jpg</path>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\train\horn1.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -17,10 +17,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>923</xmin>
-			<ymin>301</ymin>
-			<xmax>1056</xmax>
-			<ymax>429</ymax>
+			<xmin>922</xmin>
+			<ymin>302</ymin>
+			<xmax>1054</xmax>
+			<ymax>436</ymax>
 		</bndbox>
 	</object>
 </annotation>

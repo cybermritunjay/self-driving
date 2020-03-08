@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 
 class CarControls:
     def __init__(self):
+        self.blockControls=False
         self.currentAngle = 90
         self.forwardSpeed = 0
         self.backwardSpeed = 0
@@ -90,7 +91,10 @@ class CarControls:
         return distance
 
     def right(self):
+        if self.blockControls:
+            return  
         if self.currentAngle > 60:
+            self.blockControls = True
             self.currentAngle -= -5
             print("currentAngle=", self.currentAngle)
 
@@ -101,9 +105,13 @@ class CarControls:
 
             GPIO.output(self.servoPIN, False)
             self.servo.ChangeDutyCycle(0)
+            self.blockControls = False
 
     def left(self):
+        if self.blockControls:
+            return
         if self.currentAngle < 120:
+            self.blockControls = True
             self.currentAngle += 5
             print("currentAngle=", self.currentAngle)
 
@@ -114,8 +122,11 @@ class CarControls:
 
             GPIO.output(self.servoPIN, False)
             self.servo.ChangeDutyCycle(0)
+            self.blockControls = False
 
     def reverse(self):
+        if self.blockControls:
+            return
         self.backwardSpeed = self.backwardSpeed + \
             25 if self.backwardSpeed < 100 else 100
         self.forwardSpeed = 0
@@ -129,6 +140,8 @@ class CarControls:
         print("Moving Back")
 
     def goForward(self):
+        if self.blockControls:
+            return
         self.forwardSpeed = self.forwardSpeed+25 if self.forwardSpeed < 100 else 100
         self.backwardSpeed = 0
 
@@ -169,8 +182,11 @@ class CarControls:
             self.lightsOn = False
 
     def stablizeTurn(self, angle):
+        if self.blockControls:
+            return
         if angle > 60 or angle < 120:
             if abs(self.currentAngle - angle) >= 5:
+                self.blockControls = True
                 self.currentAngle = angle
                 print("currentAngle=", self.currentAngle)
                 GPIO.output(self.servoPIN, True)
@@ -178,9 +194,15 @@ class CarControls:
                 time.sleep(0.1)
                 GPIO.output(self.servoPIN, False)
                 self.servo.ChangeDutyCycle(0)
+                self.blockControls = False
 
     def clean(self):
         self.servo.stop()
         self.forward.stop()
         self.backward.stop()
         GPIO.cleanup()
+
+    def handelSign(self,obj):
+        if self.blockControls:
+            return
+        print(obj)

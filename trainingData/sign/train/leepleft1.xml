@@ -1,7 +1,7 @@
 <annotation>
 	<folder>train</folder>
 	<filename>leepleft1.jpg</filename>
-	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\training data\sign\train\leepleft1.jpg</path>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\train\leepleft1.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -17,10 +17,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>948</xmin>
-			<ymin>206</ymin>
-			<xmax>1156</xmax>
-			<ymax>428</ymax>
+			<xmin>945</xmin>
+			<ymin>201</ymin>
+			<xmax>1151</xmax>
+			<ymax>423</ymax>
 		</bndbox>
 	</object>
 </annotation>

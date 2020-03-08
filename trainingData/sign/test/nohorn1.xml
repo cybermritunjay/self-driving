@@ -1,0 +1,26 @@
+<annotation>
+	<folder>test</folder>
+	<filename>nohorn1.jpg</filename>
+	<path>C:\Users\Mritunjay Pathak\Desktop\projects\SelfDriving_car\video-streaming\trainingData\sign\test\nohorn1.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1291</width>
+		<height>968</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>no-horn</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>851</xmin>
+			<ymin>230</ymin>
+			<xmax>1022</xmax>
+			<ymax>403</ymax>
+		</bndbox>
+	</object>
+</annotation>
